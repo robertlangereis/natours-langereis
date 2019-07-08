@@ -1,0 +1,227 @@
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #777;
+  padding: 30px;
+}
+
+.header {
+  /* 100 would be 100% of the screen size */
+  height: 95vh;
+
+  /* gradient with two colors moving from top to right bottom, where the colors are transparent to show the image underneath */
+  background-image: linear-gradient(to right bottom, #7ed56fcb, #28b485cc),
+    url("../img/hero.jpg");
+
+  /* whatever the wifth of the viewport, it will try to size the width*/
+  background-size: cover;
+
+  /* it will keep the top of the image at the top of the browser, even if the browser is scaled down or up*/
+  background-position: top;
+
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  /*this gives you the dimensions of how you want the image to be "clipped", so you can cut out a piece. The order is: top left, top right, bottom right, bottom left*/
+
+  position: relative;
+  /* the measured 40px of top and left of the logo box needs to be measured from some parent point, else it woulnd't know where to start. So you set the parent containter to relative. */
+}
+
+.logo-box {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.logo {
+  height: 35px;
+}
+
+.text-box {
+  position: absolute;
+  top: 40%;
+  /* It starts the box (with the h1 we defined), from 50% of the page. But because the box has an x number of pixel in width, it's not the center of the box, but the start of the top. So 40% of the position in relation to the parent element */
+  left: 50%;
+  /* Same story here: It starts the box (with the h1 we defined), from 50% of the page. But because the box has an x number of pixel in width, it's not the center of the box, but the start of the left */
+
+  transform: translate(-50%, -50%);
+  /* these transform - translate definitions are now taken not from the parent element, but from the element itself. Shifts 50% of the element from the top. So -50% of the position in relation to the element itself*/
+
+  text-align: center;
+}
+
+.heading-primary {
+  color: white;
+  text-transform: uppercase;
+
+  /* this is a small hack used because sometimes, on some browsers, at the end of the animation, the entire block starts shacking a little bit. We don't want to show the backpart, the part behind the element itself. */
+  backface-visibility: hidden;
+  margin-bottom: 50px;
+}
+
+.heading-primary-main {
+  display: block;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: 35px;
+
+  animation-name: moveInLeft;
+  animation-duration: 1.5s;
+  /* easing normal into the animation and ease-out of the animation */
+  animation-timing-function: ease-out;
+
+  /* animation in repeat */
+  /* animation-iteration-count: 3; */
+
+  /* delaying the animation */
+  /* animation-delay: 0.2s; */
+}
+
+.heading-primary-sub {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 17.4px;
+  animation: moveInRight 1.5s ease-out;
+}
+
+/* keyframes addrule */
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+    /* rotate(180deg); */
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+/* keyframes addrule */
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInButton {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  80% {
+    transform: translateX(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+/* pseudo classes are a special state of a certain selector: hoover, link, etc. */
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  text-transform: uppercase;
+  /* so, with the text-decoration none we indicate we don't want a different color when the link has been "hit" and already visited */
+  text-decoration: none;
+  padding: 15px 40px;
+  /* round of the button */
+  border-radius: 100px;
+
+  /* all properties can be animated - enabled. This is the initial state, so the hoover and active state tranform are animated in relation to this initial state */
+  transition: all 0.2s;
+
+  position: relative;
+  /* needed to make have the after effect of the button (which is set to absolute) to shows after this relative positin of this button itself  */
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
+}
+
+.btn::after {
+  content: "";
+  /* needs to be specified, even if the content is empty as it is here */
+  display: inline-block;
+  /* needs to be specified, needs to be the same as the button (which is an inline-block) */
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  position: absolute;
+  /* needed to make absolute - with the button being relative, to make sure this after effect is after the button */
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /* to make sure this after effect is after the button */
+  transition: all 0.4s;
+  /* so we enforce all animations with a "transition" time of 4seconds  */
+}
+
+.btn-white::after {
+  background-color: #fff;
+}
+
+.btn:hover {
+  /* when hoover, the y direction is -3px */
+  transform: translateY(-3px);
+  /* 1st: offset x-direction, 10px offset y-direction, 20px blur of the shadow and the color - opacity color black*/
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+  /* when clicked - active - , the y direction is -1px */
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* looks strange, but this is an after pseudo element that will trigger only when we have the hover of the button */
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  /* scale simply increases the elemement of the X-axes by 1.5 (so scaling up with an increase in the the size of 1.5x). And increase on the Y-axes with 1.6x */
+  opacity: 0;
+  /* opacity set to 0 basically makes something invisibile, so it gives the illusion of making somehting "fade-out" */
+}
+
+.btn-animated {
+  animation: moveInButton 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards;
+  /* it will automatically apply the style of 0% before the animation starts. So this mode actually does the same as:
+    opacity: 0;
+    transform: translateY(50px);
+
+*/
+}
